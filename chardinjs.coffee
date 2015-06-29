@@ -5,16 +5,16 @@ do ($ = window.jQuery, window) ->
       @$el = $(el)
       $(window).resize => @.refresh()
 
-    start: ->
+    start: (page) ->
       return false if @._overlay_visible()
       @._add_overlay_layer()
-      @._show_element(el) for el in @$el.find('*[data-intro]:visible')
+      @._show_element(el) for el in @$el.find('*[' + (if page? then 'data-intro-page=' + page else 'data-intro') + ']:visible')
 
       @$el.trigger 'chardinJs:start'
 
-    toggle: () ->
+    toggle: (page) ->
       if not @._overlay_visible()
-        @.start()
+        @.start(page)
       else
         @.stop()
 
